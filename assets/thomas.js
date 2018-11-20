@@ -1,111 +1,52 @@
-// let graph1 = document.createElement("div");
-// graph1.setAttribute("id","graphique1")
+let divGraphique1 = document.createElement("div");
+let x = document.getElementById("mw-content-text"); //ligne 616 parent le plus proche du tableau
 
-// let connect = document.getElementById("table1");
-// connect.insertAdjacentHTML("beforebegin",graph1);
+        let table1 = document.getElementById("table1");
+        x.insertBefore(divGraphique1,table1);
+        divGraphique1.setAttribute("id","divTable1");
 
-//     let svg = dimple.newSvg("#graphique1", 800, 600);
-//     let data = [
-//       { "Word":"Hello", "Awesomeness":2000 },
-//       { "Word":"World", "Awesomeness":3000 }
-//     ];
-//     let chart = new dimple.chart(svg, data);
-//     chart.addCategoryAxis("x", "Word");
-//     chart.addMeasureAxis("y", "Awesomeness");
-//     chart.addSeries(null, dimple.plot.bar);
-//     chart.draw();
-
-// ------------------------------------------------------------------------------------
-
-    // Récupération des tableaux
-    const table1 = document.getElementById('table1');
-    const table2 = document.getElementById('table2');
-    
-    // Création de la div des graphiques
-    let createGraphic = (nom, cible) => {
-        let div = document.createElement('div');
-        div.id = nom;
-        cible.insertAdjacentElement('beforebegin', div);
-        
+    //récupération des données et création d'un tableau:
+        //source des données de table1
+            let tbody = table1.getElementsByTagName("tbody");
+            let tr = tbody[0].getElementsByTagName("tr");
+        //tableau de données:
+            let donnees=[];
+            let fonctionTableau=()=>{
+                for (i=1;i<tr.length;i++){ //i=1 ne garde pas les données du n° de pays
+                    let pays=[];
+                    let th = tr[i].getElementsByTagName("th");
+                    let div = th[0].getElementsByTagName("div");
+                    let number = div[0].innerHTML;
+                    pays.push(number);
+                    let td = tr[i].getElementsByTagName("td");
+                        for (y=0;y<td.length;y++){
+                            let contenu = td[y].innerHTML;
+                            if(contenu != ":"){
+                                pays.push(contenu);
+                            }
+                        }
+                    donnees.push(pays);
+                }
+            }
+            fonctionTableau();
+            
+    //conception du graphique via dimple (attention ajout du script dimple dans l'HTML)
+    let svg = dimple.newSvg("#divTable1", 800, 800);
+    data = [];
+    for (i=0;i<donnees.length;i++){
+        for (j=2002;j<2013;j++){
+            let year = { "Année":j, "Infractions":donnees[i][j-2000],  "Pays": donnees[i][1] };
+            if (year.Infractions != undefined){
+                data.push(year);
+            }
+        }
     }
-    createGraphic('graph1', table1);
-
-    // // Insertion du premier graphique
-    let svg = dimple.newSvg("#graph1", 640, 480);
-
-
-let table = document.querySelectorAll('tbody');  console.log(table);
-let table01 = table[0];   console.log(table01);
-let tr = table01.querySelectorAll('tr'); console.log(tr);
-let td = table01.querySelectorAll('td:nth-child(2)'); console.log(td);
-let tableall = table01.querySelectorAll('tr');
-
-
-// Changement de pays avec ses informations
-console.log(table01.querySelectorAll('tr:nth-child(2)')[0].innerText);
-console.log(table01.querySelectorAll('td:nth-child(2)')[0].innerText);
-
-// Ne pas prendre en compte le pays
-
-//console.log(table01.querySelectorAll("tr")[1].querySelectorAll("td")[1]);
-
-let nombrenombre = [];
-for (let i = 1; i < 11; i++) {
-nombrenombre.push(table01.querySelectorAll("tr")[1].querySelectorAll("td")[1].innerHTML);
-} //console.log(nombrenombre);
-
-///PAYS
-
-// console.log("blabla" + tr[35].querySelectorAll('td')[0].innerHTML);
-
-console.log(tableall[1].querySelectorAll('td:nth-child(2)'));
-// console.log(tableall[35].querySelectorAll('td:nth-child(2)'));
-
-let pays = [];
-for (let i = 1; i < 35; i++) {
-  pays.push(tr[i].querySelectorAll('td')[0].innerHTML)
-} console.log(pays);
-
-let annee = [];
-for (let i = 2; i < 11; i++) {
-  annee.push(table01.querySelectorAll("tr")[0].querySelectorAll("th")[i].innerText);
-} console.log(annee);
-
-
-console.log()
-
-// Tableau BELGIQUE TERMINE
-// let belgique = [];
-// for (let i = 0; i < annee.length; i++) {
-//   belgique.push(annee[i].innerHTML);
-// } console.log(belgique);
-
-
-
-
-// table1obj(); 
-
-// let data = [
-// { "Année":"2002", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2002", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2003", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2004", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2005", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2006", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2007", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2008", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2009", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2010", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2011", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// { "Année":"2012", "Nombre (en milliers)": Belgiquenombre, "Pays":Pays },
-// ];
-
-// var chart = new dimple.chart(svg, data);
-// chart.addCategoryAxis("x", "Année");
-// chart.addMeasureAxis("y", "Nombre (en milliers)");
-// chart.addSeries("Pays", dimple.plot.line);
-// chart.addLegend(60, 10, 500, 20, "Belgique");
-// chart.draw();
+    var myChart = new dimple.chart(svg, data);
+    myChart.addCategoryAxis("x", "Année");
+    myChart.addMeasureAxis("y", "Infractions");
+    myChart.addSeries("Pays", dimple.plot.bar);
+    myChart.addLegend(0, 10, 1000, 250);
+    myChart.draw();
 
 
 
@@ -115,51 +56,91 @@ console.log()
 
 
 
+    //tableau 2//
+    let table2 = document.getElementById('table2');
+    let divGraphique2 = document.createElement("div");
 
-
-
-
-
-
-
-
-
-
-
-
-    // // Récupération des tableaux
-    // const table1 = document.getElementById('table1');
-    // const table2 = document.getElementById('table2');
-    
-    // // Création de la div des graphiques
-    // let createGraphic = (nom, cible) => {
-    //     let div = document.createElement('div');
-    //     div.id = nom;
-    //     cible.insertAdjacentElement('beforebegin', div);
+    divGraphique2.id="dimple2";
         
-    // }
-    // createGraphic('graph1', table1);
+        table2.parentNode.insertBefore(divGraphique2,table2);
+        
+    //récupération des données et création d'un tableau:
+        //source des données de table2
+            let tbody2 = table2.getElementsByTagName("tbody");
+            let tr2 = tbody2[0].getElementsByTagName("tr");
+        //tableau de données:
+            let donnees2=[];
+            let fonctionTableau2=()=>{
+                for (i=1;i<tr2.length;i++){ //i=1 ne garde pas les données du n° de pays
+                    let pays=[];
+                    let th2 = tr2[i].getElementsByTagName("th");
+                    let div2 = th2[0].getElementsByTagName("div");
+                    let number2 = div2[0].innerHTML;
+                    pays.push(number2);
+                    let td2 = tr2[i].getElementsByTagName("td");
+                        for (y=0;y<td2.length;y++){
+                            let contenu2 = td2[y].innerHTML;
+                            if(contenu2 != ":"){
+                                pays.push(contenu2);
+                            }
+                        }
+                    donnees2.push(pays);
+                }
+            }
+            fonctionTableau2();
+            // console.log(donnees2);
+            
+    //conception du graphique via dimple (attention ajout du script dimple dans l'HTML)
+    let svg2 = dimple.newSvg("#dimple2", 800, 800);
+    data2 = [];
+    for (ii=0;ii<donnees2.length;ii++){
+        for (jj=2;jj<4;jj++){
+            let year2 = { "Année":jj+2000, "crimes":donnees2[ii][jj],  "Pays": donnees2[ii][1] };
+            if (year2.crimes != undefined){
+                data2.push(year2);
+            }
+        }
+    }
+    let chart2 = new dimple.chart(svg2, data2);
+    chart2.addCategoryAxis("x", "Année");
+    chart2.addMeasureAxis("y", "crimes");
+    chart2.addSeries("Pays", dimple.plot.bar);
+    chart2.addLegend(0, 0, 900, 250);
+    chart2.draw();
 
-    // // // Insertion du premier graphique
-    // let svg = dimple.newSvg("#graph1", 640, 480);
-    // let data = [
-    //   { "Année":"2002", "Nombre (en milliers)":1012.8, "Pays":"Belgique"},
-    //   { "Année":"2003", "Nombre (en milliers)":1007.8,  "Pays":"Belgique"},
-    //   { "Année":"2004", "Nombre (en milliers)":1013.7,  "Pays":"Belgique"},
-    //   { "Année":"2005", "Nombre (en milliers)":999.4,   "Pays":"Belgique"},
-    //   { "Année":"2006", "Nombre (en milliers)":1022.8,  "Pays":"Belgique"},
-    //   { "Année":"2007", "Nombre (en milliers)":1034.4,  "Pays":"Belgique"},
-    //   { "Année":"2008", "Nombre (en milliers)":1043.6,  "Pays":"Belgique"},
-    //   { "Année":"2009", "Nombre (en milliers)":1067.3,  "Pays":"Belgique"},
-    //   { "Année":"2010", "Nombre (en milliers)":1072.0, "Pays":"Belgique"},
-    //   { "Année":"2011", "Nombre (en milliers)":1111.0, "Pays":"Belgique"},
-    //   { "Année":"2012", "Nombre (en milliers)":1073.8, "Pays":"Belgique"},
-    // ];
-    // var chart = new dimple.chart(svg, data);
-    // chart.addCategoryAxis("x", "Année");
-    // chart.addMeasureAxis("y", "Nombre (en milliers)");
-    // chart.addSeries("Pays", dimple.plot.line);
-    // chart.addLegend(60, 10, 500, 20, "Belgique");
-    // chart.draw();
 
 
+
+    // tableau 3 //
+
+
+    let table3 = document.getElementById('firstHeading');
+    let divGraphique3 = document.createElement("div");
+    divGraphique3.id="dimple3";
+
+    table3.parentNode.insertBefore(divGraphique3,table3);
+
+
+let svg3 = dimple.newSvg("#dimple3", 800, 800);
+
+let dataPoints = [];
+$.getJSON("https://inside.becode.org/api/v1/data/random.json", function(data) {  
+    $.each(data, function(key, value){
+        dataPoints.push({x: value[0], y: parseInt(value[1])});
+    });
+});
+console.log(dataPoints)
+
+
+    let chart3 = new dimple.chart(svg3, dataPoints);
+    chart3.addCategoryAxis("x", "value");
+    chart3.addMeasureAxis("y", "value");
+    chart3.addSeries("pays", dimple.plot.line);
+    chart3.addLegend(0, 0, 900, 350);
+    chart3.draw();
+
+
+
+
+    y2.overrideMax = 30;
+    y2.overrideMin = -30;
