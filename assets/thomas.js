@@ -1,3 +1,41 @@
+// let table = document.querySelectorAll('tbody');  console.log(table);
+// let table1 = table[0];   console.log(table1);
+// let tr = table1.querySelectorAll('tr'); console.log(tr);
+// let td = table1.querySelectorAll('td:nth-child(2)'); console.log(td);
+// let tableall = table1.querySelectorAll('tr');
+// let pays = [];
+
+
+// ///PAYS
+
+// console.log(tableall[1].querySelectorAll('td:nth-child(2)'));
+// console.log(tableall[35].querySelectorAll('td:nth-child(2)'));
+
+
+// for (let i = 1; i < 35; i++) {
+//   pays.push(tr[i].querySelectorAll('td')[0].innerHTML)
+// } console.log(pays);
+
+// console.log(tr[35].querySelectorAll('td')[0].innerHTML);
+
+
+// let année = [];
+// for (let i = 0; i < 1; i++) {
+//   année.push(tr[i].innerText); 
+// } console.log(année);
+
+
+// let nombrebelgique = [];
+// for (let i = 0; i < 1; i++) {
+//   nombrebelgique.push(tr[i].innerText);
+// } console.log(nombrebelgique);
+
+
+
+
+
+
+
 let divGraphique1 = document.createElement("div");
 let x = document.getElementById("mw-content-text"); //ligne 616 parent le plus proche du tableau
 
@@ -202,7 +240,7 @@ setTimeout(function(){updateChart()}, 5000);
     chart.draw();
     
     let coucou =() => {
-    setTimeout(function(){coucou()}, 5000);
+    setTimeout(function(){coucou()}, 0);
 }    
           }
         };
